@@ -1,0 +1,61 @@
+﻿@model EmlakTakipSistami.Models.Kiraci
+
+<div class="card shadow-sm mt-4">
+    <div class="card-header bg-info text-white">
+        <h4>Yeni Kiracı Ekle</h4>
+    </div>
+    <div class="card-body">
+        <form asp-action="Create" method="post">
+            @Html.AntiForgeryToken()
+
+            @* Daire Dropdown *@
+            <div class="mb-3">
+                <label>Daire Seçiniz</label>
+                @{
+                    var daireler = ViewBag.Daireler as List<EmlakTakipSistami.Models.Daire> ?? new List<EmlakTakipSistami.Models.Daire>();
+                }
+                <select asp-for="DaireId" class="form-control" required>
+                    <option value="">Daire seçiniz</option>
+                    @foreach (var daire in daireler)
+                    {
+                        <option value="@daire.Id">@daire.Il, @daire.Ilce - Kira: @daire.KiraUcreti ₺</option>
+                    }
+                </select>
+                <span asp-validation-for="DaireId" class="text-danger"></span>
+            </div>
+
+            @* Ad Soyad *@
+            <div class="mb-3">
+                <label>Ad Soyad</label>
+                <input asp-for="AdSoyad" class="form-control" required />
+                <span asp-validation-for="AdSoyad" class="text-danger"></span>
+            </div>
+
+            @* Telefon *@
+            <div class="mb-3">
+                <label>Telefon</label>
+                <input asp-for="Telefon" class="form-control" required />
+                <span asp-validation-for="Telefon" class="text-danger"></span>
+            </div>
+
+            @* Doğum Tarihi *@
+            <div class="mb-3">
+                <label>Doğum Tarihi</label>
+                <input asp-for="DogumTarihi" type="date" class="form-control" required />
+                <span asp-validation-for="DogumTarihi" class="text-danger"></span>
+            </div>
+
+            @* Butonlar *@
+            <button type="submit" class="btn btn-success">
+                <i class="fas fa-save"></i> Kaydet
+            </button>
+            <a asp-action="Index" class="btn btn-secondary">
+                <i class="fas fa-arrow-left"></i> Geri
+            </a>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

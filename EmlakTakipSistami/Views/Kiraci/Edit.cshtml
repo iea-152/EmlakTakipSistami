@@ -1,0 +1,44 @@
+﻿@model EmlakTakipSistami.Models.Kiraci
+@using Microsoft.AspNetCore.Mvc.Rendering
+
+<div class="card shadow-sm mt-4">
+    <div class="card-header bg-info text-white">
+        <h4>@(Model.Id == 0 ? "Yeni Kiracı Ekle" : "Kiracı Düzenle")</h4>
+    </div>
+    <div class="card-body">
+        <form asp-action="@((Model.Id == 0) ? "Create" : "Edit")" method="post">
+            <input type="hidden" asp-for="Id" />
+
+            <!-- Daire Seçimi -->
+            <div class="mb-3">
+                <label class="form-label">Daire Seçiniz</label>
+                <select asp-for="DaireId" class="form-control"
+                        asp-items="@(new SelectList(ViewBag.Daireler, "Id", "DisplayName", ViewBag.SelectedDaireId))">
+                    <option value="">Daire seçiniz</option>
+                </select>
+                <span asp-validation-for="DaireId" class="text-danger"></span>
+            </div>
+
+            <!-- Ad Soyad -->
+            <div class="mb-3">
+                <label class="form-label">Ad Soyad</label>
+                <input asp-for="AdSoyad" class="form-control" />
+                <span asp-validation-for="AdSoyad" class="text-danger"></span>
+            </div>
+
+            <!-- Telefon -->
+            <div class="mb-3">
+                <label class="form-label">Telefon</label>
+                <input asp-for="Telefon" class="form-control" />
+                <span asp-validation-for="Telefon" class="text-danger"></span>
+            </div>
+
+            <button type="submit" class="btn btn-success">
+                <i class="fas fa-save"></i> Kaydet
+            </button>
+            <a asp-action="Index" class="btn btn-secondary">
+                <i class="fas fa-arrow-left"></i> Geri
+            </a>
+        </form>
+    </div>
+</div>

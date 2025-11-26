@@ -1,0 +1,75 @@
+﻿@model EmlakTakipSistami.Models.Daire
+
+<div class="card shadow-sm rounded-3 mt-4">
+    <div class="card-header bg-gradient-primary text-white">
+        <h4><i class="fas fa-plus-circle"></i> Yeni Daire Ekle</h4>
+    </div>
+    <div class="card-body">
+
+        <form asp-action="Create" asp-controller="Daire" method="post">
+
+            <!-- İL -->
+            <div class="form-group mb-3">
+                <label class="form-label">İl</label>
+                <select asp-for="Il" id="Il" class="form-select form-select-lg">
+                    <option value="">İl seçiniz</option>
+                    @foreach (var il in (ViewBag.Iller as List<string> ?? new List<string>()))
+                    {
+                        <option value="@il">@il</option>
+                    }
+                </select>
+            </div>
+
+            <!-- İLÇE -->
+            <div class="form-group mb-3">
+                <label class="form-label">İlçe</label>
+                <select asp-for="Ilce" id="Ilce" class="form-select form-select-lg">
+                    <option value="">Önce il seçiniz</option>
+                </select>
+            </div>
+
+            <script>
+                var ilceler = @Html.Raw(ViewBag.IlcelerJson);
+
+                var ilSelect = document.getElementById("Il");
+                var ilceSelect = document.getElementById("Ilce");
+
+                ilSelect.addEventListener("change", function () {
+                    var secilenIl = this.value;
+                    ilceSelect.innerHTML = "<option value=''>İlçe seçiniz</option>";
+
+                    if (secilenIl && ilceler[secilenIl]) {
+                        ilceler[secilenIl].forEach(function (i) {
+                            var opt = document.createElement("option");
+                            opt.value = i;
+                            opt.text = i;
+                            ilceSelect.appendChild(opt);
+                        });
+                    }
+                });
+            </script>
+
+            <!-- Kira -->
+            <div class="form-group mb-4">
+                <label class="form-label">Kira Ücreti</label>
+                <div class="input-group">
+                    <span class="input-group-text">₺</span>
+                    <input asp-for="KiraUcreti" class="form-control" type="number" step="0.01" placeholder="Örn: 1500" />
+                </div>
+                <span asp-validation-for="KiraUcreti" class="text-danger"></span>
+            </div>
+
+            <!-- Butonlar -->
+            <div class="d-flex gap-2">
+                <button type="submit" class="btn btn-success btn-lg">
+                    <i class="fas fa-save"></i> Kaydet
+                </button>
+                <a href="@Url.Action("Index", "Daire")" class="btn btn-outline-secondary btn-lg">
+                    <i class="fas fa-arrow-left"></i> Geri
+                </a>
+            </div>
+
+        </form>
+
+    </div>
+</div>
