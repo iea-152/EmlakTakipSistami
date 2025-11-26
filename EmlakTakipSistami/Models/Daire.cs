@@ -8,6 +8,9 @@ namespace EmlakTakipSistami.Models
         [Key]
         public int Id { get; set; }
 
+
+        [Display(Name ="Daire Adı/ No ")]
+        public string DaireAdi { get; set; }  // Daire Adı veya Numarası
         public decimal KiraUcreti { get; set; }  // Kira Ücreti
 
         // Bu iki alan JSON'daki veriyi göstermek için yeterli

@@ -27,6 +27,11 @@
                     <option value="">Önce il seçiniz</option>
                 </select>
             </div>
+            <div class="form-group">
+                <label asp-for="DaireAdi" class="control-label"></label>
+                <input asp-for="DaireAdi" class="form-control" placeholder="Örn: Yıldız Apt. No:4" />
+                <span asp-validation-for="DaireAdi" class="text-danger"></span>
+            </div>
 
             <script>
                 var ilceler = @Html.Raw(ViewBag.IlcelerJson);

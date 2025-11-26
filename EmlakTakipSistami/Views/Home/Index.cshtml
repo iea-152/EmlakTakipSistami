@@ -1,95 +1,148 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@model List<EmlakTakipSistami.Models.Kiraci>
+
+@{
+    ViewData["Title"] = "Genel Bakış";
 }
 
-<!--begin::App Main-->
-<main class="app-main">
-    <!--begin::App Content Header-->
-    <div class="app-content-header">
-        <!--begin::Container-->
-        <div class="container-fluid">
-            <!--begin::Row-->
-            <div class="row">
-                <div class="col-sm-6">
-                    <h3 class="mb-0"></h3>
-                </div>
-                <div class="col-sm-6">
-                    <ol class="breadcrumb float-sm-end">
-                        <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">
-                            GENEL BAKIŞ
-                        </li>
-                    </ol>
-                </div>
-            </div> <!--end::Row-->
-        </div> <!--end::Container-->
+<div class="container-fluid py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h4 class="mb-0 fw-bold text-dark">Genel Bakış</h4>
+            
+        </div>
+        <div class="dropdown">
+            <button class="btn btn-white shadow-sm dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                <i class="fas fa-calendar-alt me-2 text-primary"></i>Bu Ay
+            </button>
+        </div>
     </div>
-    <div class="app-content">
-        <!--begin::Container-->
-        <div class="container-fluid">
-            <!--begin::Row-->
-            <div class="row">
-                <div class="col-lg-6">
-                    <div class="card mb-4">
-                        <div class="card-header border-0">
-                            <div class="d-flex justify-content-between">
-                                <h3 class="card-title">Online Store Visitors</h3> <a href="javascript:void(0);" class="link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">View Report</a>
-                            </div>
+
+    <div class="row g-4">
+
+        <div class="col-12 col-md-6 col-lg-3">
+            <div class="card stat-card border-0 shadow-sm h-100">
+                <div class="card-body">
+                    <div class="d-flex align-items-center mb-3">
+                        <div class="stat-icon bg-primary bg-opacity-10 text-primary">
+                            <i class="fas fa-building"></i>
                         </div>
-                        <div class="card-body">
-                            <div class="d-flex">
-                                <p class="d-flex flex-column"> <span class="fw-bold fs-5">820</span> <span>Visitors Over Time</span> </p>
-                                <p class="ms-auto d-flex flex-column text-end">
-                                    <span class="text-success">
-                                        <i class="bi bi-arrow-up"></i> 12.5%
-                                    </span> <span class="text-secondary">Since last week</span>
-                                </p>
-                            </div> <!-- /.d-flex -->
-                            <div class="position-relative mb-4">
-                                <div id="visitors-chart"></div>
-                            </div>
-                            <div class="d-flex flex-row justify-content-end">
-                                <span class="me-2">
-                                    <i class="bi bi-square-fill text-primary"></i> This Week
-                                </span> <span>
-                                    <i class="bi bi-square-fill text-secondary"></i> Last Week
-                                </span>
-                            </div>
+                        <span class="badge bg-success bg-opacity-10 text-success trend-badge">
+                            Aktif
+                        </span>
+                    </div>
+                    <h6 class="text-muted mb-2">Toplam Daire</h6>
+                    <h4 class="mb-3 fw-bold">@ViewBag.ToplamDaire</h4>
+                    <div class="progress bg-primary bg-opacity-10">
+                        <div class="progress-bar bg-primary" style="width: 100%"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 col-md-6 col-lg-3">
+            <div class="card stat-card border-0 shadow-sm h-100">
+                <div class="card-body">
+                    <div class="d-flex align-items-center mb-3">
+                        <div class="stat-icon bg-success bg-opacity-10 text-success">
+                            <i class="fas fa-users"></i>
                         </div>
-                    </div> <!-- /.card -->
-                   
-                </div> <!-- /.col-md-6 -->
-                <div class="col-lg-6">
-                    <div class="card mb-4">
-                        <div class="card-header border-0">
-                            <div class="d-flex justify-content-between">
-                                <h3 class="card-title">Sales</h3> <a href="javascript:void(0);" class="link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">View Report</a>
-                            </div>
+                        <span class="badge bg-primary bg-opacity-10 text-primary trend-badge">
+                            Müşteriler
+                        </span>
+                    </div>
+                    <h6 class="text-muted mb-2">Toplam Kiracı</h6>
+                    <h4 class="mb-3 fw-bold">@ViewBag.ToplamKiraci</h4>
+                    <div class="progress bg-success bg-opacity-10">
+                        <div class="progress-bar bg-success" style="width: @(ViewBag.ToplamDaire > 0 ? (ViewBag.ToplamKiraci * 100 / ViewBag.ToplamDaire) : 0)%"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 col-md-6 col-lg-3">
+            <div class="card stat-card border-0 shadow-sm h-100">
+                <div class="card-body">
+                    <div class="d-flex align-items-center mb-3">
+                        <div class="stat-icon bg-warning bg-opacity-10 text-warning">
+                            <i class="fas fa-door-open"></i>
                         </div>
-                        <div class="card-body">
-                            <div class="d-flex">
-                                <p class="d-flex flex-column"> <span class="fw-bold fs-5">$18,230.00</span> <span>Sales Over Time</span> </p>
-                                <p class="ms-auto d-flex flex-column text-end">
-                                    <span class="text-success">
-                                        <i class="bi bi-arrow-up"></i> 33.1%
-                                    </span> <span class="text-secondary">Since Past Year</span>
-                                </p>
-                            </div> <!-- /.d-flex -->
-                            <div class="position-relative mb-4">
-                                <div id="sales-chart"></div>
-                            </div>
-                            <div class="d-flex flex-row justify-content-end">
-                                <span class="me-2">
-                                    <i class="bi bi-square-fill text-primary"></i> This year
-                                </span> <span>
-                                    <i class="bi bi-square-fill text-secondary"></i> Last year
-                                </span>
-                            </div>
+                        <span class="badge bg-danger bg-opacity-10 text-danger trend-badge">
+                            Boşta
+                        </span>
+                    </div>
+                    <h6 class="text-muted mb-2">Boş Daireler</h6>
+                    <h4 class="mb-3 fw-bold">@ViewBag.BosDaire</h4>
+                    <div class="progress bg-warning bg-opacity-10">
+                        <div class="progress-bar bg-warning" style="width: @(ViewBag.ToplamDaire > 0 ? (ViewBag.BosDaire * 100 / ViewBag.ToplamDaire) : 0)%"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 col-md-6 col-lg-3">
+            <div class="card stat-card border-0 shadow-sm h-100">
+                <div class="card-body">
+                    <div class="d-flex align-items-center mb-3">
+                        <div class="stat-icon bg-info bg-opacity-10 text-info">
+                            <i class="fas fa-wallet"></i>
                         </div>
-                    </div> <!-- /.card -->
-         
-                </div> <!-- /.col-md-6 -->
-            </div> <!--end::Row-->
-        </div> <!--end::Container-->
-    </div> <!--end::App Content-->
-</main> <!--end::App Main--> 
+                        <span class="badge bg-success bg-opacity-10 text-success trend-badge">
+                            Aylık Tahmini
+                        </span>
+                    </div>
+                    <h6 class="text-muted mb-2">Aylık Kira Geliri</h6>
+                    <h4 class="mb-3 fw-bold text-success">@ViewBag.ToplamGelir.ToString("N0") ₺</h4>
+                    <div class="progress bg-info bg-opacity-10">
+                        <div class="progress-bar bg-info" style="width: 100%"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-4">
+        <div class="col-12">
+            <div class="card border-0 shadow-sm" style="border-radius: 15px;">
+                <div class="card-header bg-white border-0 pt-4 px-4 d-flex justify-content-between">
+                    <h5 class="card-title fw-bold mb-0">Son Eklenen Kiracılar</h5>
+                    <a href="/Kiraci/Index" class="btn btn-sm btn-light text-primary">Tümünü Gör</a>
+                </div>
+                <div class="card-body px-4">
+                    <div class="list-group list-group-flush">
+
+                        @if (Model != null && Model.Count > 0)
+                        {
+                            @foreach (var item in Model)
+                            {
+                                <div class="list-group-item border-0 d-flex align-items-center px-0 py-3 border-bottom">
+                                    <div class="avatar-sm bg-primary bg-opacity-10 rounded-circle p-3 me-3">
+                                        <i class="fas fa-user-check text-primary fa-lg"></i>
+                                    </div>
+                                    <div class="flex-grow-1">
+                                        <h6 class="mb-1 fw-bold">@item.AdSoyad</h6>
+                                        <p class="text-muted small mb-0">
+                                            <i class="fas fa-home me-1"></i>
+                                            @(item.Daire != null ? item.Daire.DaireAdi + " (" + item.Daire.Ilce + ")" : "Daire Bilgisi Yok")
+                                        </p>
+                                    </div>
+                                    <div class="text-end">
+                                        <span class="d-block fw-bold text-dark">@item.Telefon</span>
+                                        <small class="text-muted">ID: #@item.Id</small>
+                                    </div>
+                                </div>
+                            }
+                        }
+                        else
+                        {
+                            <div class="text-center py-4 text-muted">
+                                <i class="fas fa-info-circle mb-2"></i>
+                                <p>Henüz kayıtlı kiracı bulunmuyor.</p>
+                            </div>
+                        }
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -79,7 +79,8 @@ public class KiraciController : Controller
             .Select(d => new
             {
                 d.Id,
-                DisplayName = d.Il + ", " + d.Ilce + " - Kira: " + d.KiraUcreti + "₺"
+                // Artık Daire Adı varsa onu, yoksa İl/İlçe bilgisini gösterir
+                DisplayName = (d.DaireAdi != null ? d.DaireAdi + " - " : "") + d.Il + "/" + d.Ilce + " (" + d.KiraUcreti + "₺)"
             })
             .ToList();
 

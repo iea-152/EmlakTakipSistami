@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace EmlakTakipSistami.Models
@@ -7,8 +8,8 @@ namespace EmlakTakipSistami.Models
     {
         public int Id { get; set; }
 
-        
         [Display(Name = "Ad Soyad")]
+        [Required(ErrorMessage = "Ad Soyad alanı zorunludur.")]
         public string AdSoyad { get; set; }
 
         [Display(Name = "Telefon")]
@@ -20,7 +21,9 @@ namespace EmlakTakipSistami.Models
         // Daire ile ilişki
         [Display(Name = "Daire")]
         public int DaireId { get; set; }
+
+        // [ValidateNever] sayesinde form gönderilirken "Daire bilgisi boş" hatası almayacaksınız.
+        [ValidateNever]
         public Daire Daire { get; set; }
     }
 }
-

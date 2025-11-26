@@ -1,19 +1,29 @@
 using EmlakTakipSistami.Services;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authentication.Cookies; // Bu kütüphane gerekli
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+// 1. Servislerin Eklendiði Bölüm
 builder.Services.AddControllersWithViews();
+
+// Veritabaný Baðlantýsý
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+// Authentication (Giriþ) Ayarlarýný Startup.cs'ten buraya taþýdýk
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie(options =>
+    {
+        options.LoginPath = "/Login/GirisYap/"; // Giriþ yapýlmamýþsa buraya atar
+    });
+
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+// 2. HTTP Ýstek Hattý (Pipeline) Ayarlarý
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
 
@@ -22,6 +32,8 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+// Önce kimlik doðrulama (Authentication), sonra yetkilendirme (Authorization) olmalý
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(

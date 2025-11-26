@@ -20,8 +20,12 @@ namespace EmlakTakipSistami.Services
             modelBuilder.Entity<Daire>()
                 .Property(d => d.KiraUcreti)
                 .HasColumnType("decimal(18,2)");
+            modelBuilder.Entity<Daire>()
+            .HasMany(d => d.Kiracilar)
+            .WithOne(k => k.Daire)
+            .HasForeignKey(k => k.DaireId);
 
-            
+
 
         }
 
